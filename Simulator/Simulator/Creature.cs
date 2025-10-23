@@ -7,42 +7,81 @@ using System.Threading.Tasks;
 namespace Simulator;
 public class Creature
 {
-    public string Name { get; set; }
-   
+    //pola są prywatne
+    private string name = "Unknown";
+    private int level = 1;
 
-    private int level;
+    private bool nameSet = false;
+    private bool levelSet = false;
+
+    public string Name
+    {
+        get => name;
+        init
+        {
+            if (nameSet) return; // można go ustawić ylko raz
+            nameSet = true;
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                name = "Unknown";
+                return;
+            }
+
+            string temp = value.Trim();
+
+            //jeśli za długie to obetnie po 25 znakach
+            if (temp.Length > 25)
+                temp = temp.Substring(0, 25).TrimEnd();
+
+            // tam gdzie za krótkie to dopisze #
+            if (temp.Length < 3)
+                temp = temp.PadRight(3, '#');
+
+            // zapewnienie że pierwsza litera jest zawsze wielka
+            if (char.IsLower(temp[0]))
+                temp = char.ToUpper(temp[0]) + temp.Substring(1);
+
+            name = temp;
+        }
+    }
+
     public int Level
     {
         get => level;
-        set => level = value > 0 ? value : 1;
+        init
+        {
+            if (levelSet) return; // można go ustawić tylko raz
+            levelSet = true;
+
+            int temp = value;
+            if (temp < 1) temp = 1;
+            if (temp > 10) temp = 10;
+
+            level = temp;
+        }
     }
 
+    public Creature() { }
 
     public Creature(string name, int level = 1)
     {
         Name = name;
         Level = level;
     }
-    public Creature()
-    {
-        Name = "Unknown";
-        Level = 1;
-    }
-
 
     public void SayHi()
     {
         Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
     }
 
-    //public string GetName() { return Name; }
-    //public int GetLevel() { return Level; }
-    //public void SetLevel(int level) { this.Level = level > 0 ? level : 1; } //jeśli level większy od 1 to ustaw go, jak nie to daj 1
-    public string Info
+    public void Upgrade()
     {
-        get { return $"{Name} [{Level}]"; }
-
+        if (level < 10)
+            level++;
     }
+
+    public string Info => $"{Name} [{Level}]";
 
 
 }
