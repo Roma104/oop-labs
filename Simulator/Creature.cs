@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Simulator;
-public class Creature
+public abstract class Creature
 {
     //pola są prywatne
     private string name = "Unknown";
@@ -74,10 +74,10 @@ public class Creature
         Level = level;
     }
 
-    public void SayHi()
-    {
-        Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
-    }
+    public abstract void SayHi();
+    
+        //Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
+    public abstract int Power { get; }
 
     public void Upgrade()
     {
