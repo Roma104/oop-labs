@@ -84,6 +84,13 @@ public abstract class Creature
 
     public abstract string Info { get; }
 
+    public override string ToString()
+    {
+        return $"{GetType().Name.ToUpper()}: {Info}";
+    }
+
+
+
     public void Go(Direction direction)
     {
         string dir = direction.ToString().ToLower();

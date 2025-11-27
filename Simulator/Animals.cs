@@ -10,7 +10,8 @@ public class Animals
 {
     private string description = "Unknown";
     //private bool descriptionSet = false;
-
+    
+    public virtual string Info => $"{Description} <{Size}>";
     public required string Description
     {
         get => description;
@@ -46,5 +47,9 @@ public class Animals
 
     public uint Size { get; set; } = 3;
 
-    public string Info => $"{Description} <{Size}>.";
+    public override string ToString()
+    {
+        return $"{GetType().Name.ToUpper()}: {Info}";
+    }
+
 }

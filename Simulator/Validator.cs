@@ -20,11 +20,16 @@ namespace Simulator
             if (string.IsNullOrEmpty(value))
                 value = new string(placeholder, min);
 
+            value = value.Trim();
+
             if (value.Length < min)
-                return value + new string(placeholder, min - value.Length);
+                value = value + new string(placeholder, min - value.Length);
 
             if (value.Length > max)
-                return value.Substring(0, max);
+                value = value.Substring(0, max);
+
+            if (value.Length > 0 && char.IsLower(value[0]))
+                value = char.ToUpper(value[0]) + value.Substring(1);
 
             return value;
         }
