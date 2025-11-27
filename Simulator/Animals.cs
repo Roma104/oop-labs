@@ -5,16 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Simulator;
-// plural name because represents group of animals
+// plural name because represents group of animals v
 public class Animals
 {
     private string description = "Unknown";
-    private bool descriptionSet = false;
+    //private bool descriptionSet = false;
 
     public required string Description
     {
         get => description;
-        init
+        init => description = Validator.Shortener(value, 3, 15, '#');
+        /*init
         {
             if (descriptionSet) return;
             descriptionSet = true;
@@ -40,7 +41,7 @@ public class Animals
                 temp = char.ToUpper(temp[0]) + temp.Substring(1);
 
             description = temp;
-        }
+        }*/
     }
 
     public uint Size { get; set; } = 3;

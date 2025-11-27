@@ -12,14 +12,14 @@ public abstract class Creature
     private string name = "Unknown";
     private int level = 1;
 
-    private bool nameSet = false;
-    private bool levelSet = false;
+  //  private bool nameSet = false;
+  //  private bool levelSet = false;
 
     public string Name
     {
         get => name;
-        init
-        {
+        init => name = Validator.Shortener(value, 3, 25, '#');
+        /*{
             if (nameSet) return; // można go ustawić ylko raz
             nameSet = true;
 
@@ -44,14 +44,14 @@ public abstract class Creature
                 temp = char.ToUpper(temp[0]) + temp.Substring(1);
 
             name = temp;
-        }
+        }*/
     }
 
     public int Level
     {
         get => level;
-        init
-        {
+        init => level = Validator.Limiter(value, 1, 10);
+        /*{
             if (levelSet) return; // można go ustawić tylko raz
             levelSet = true;
 
@@ -60,20 +60,17 @@ public abstract class Creature
             if (temp > 10) temp = 10;
 
             level = temp;
-        }
+        }*/
 
 
 
     }
-
-    public Creature() { }
-
     public Creature(string name, int level = 1)
     {
         Name = name;
         Level = level;
     }
-
+    public Creature() { }
     public abstract void SayHi();
     
         //Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
@@ -85,7 +82,7 @@ public abstract class Creature
             level++;
     }
 
-    public string Info => $"{Name} [{Level}]";
+    public abstract string Info { get; }
 
     public void Go(Direction direction)
     {

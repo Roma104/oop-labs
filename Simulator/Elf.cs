@@ -2,29 +2,37 @@
 
 public class Elf : Creature
 {
-    public int Agility { get; set; } = 1;
+    //public int Agility { get; set; } = 1;
+
+    private int agility;
 
     private int singCount = 0;
-    public void Sing()
-    { Console.WriteLine($"{Name} is singing");
-        singCount++;
-        if (singCount % 3 == 0)
-            Agility = Math.Min(10, Agility + 1);
+
+    public int Agility
+    {
+        get => agility;
+        init => agility = Validator.Limiter(value, 0, 10);
     }
 
-    public Elf(string name, int level = 1, int agility = 1) : base(name, level)
+  
+    public Elf(string name, int level = 1, int agility = 1) : base(name, level) => Agility = agility;
+
+
+    public void Sing()
     {
-        this.Agility = Math.Clamp(agility, 0, 10);
+        Console.WriteLine($"{Name} is singing");
+        singCount++;
+        if (singCount % 3 == 0)
+            agility = Validator.Limiter(Agility + 1, 0, 10);
     }
 
     public Elf() 
     {
-        Agility = 1;
     }
 
     public override void SayHi()
     {
-        Console.WriteLine($"Hi, my name is {Name}, my level is {Level}, and my agility is {Agility}.");
+        Console.WriteLine($"Hi, I'm {Name}, my level is {Level}, and my agility is {Agility}.");
     }
 
     /*public override string ToString()
@@ -33,5 +41,6 @@ public class Elf : Creature
     }*/
 
     public override int Power => 8 * Level + 2 * Agility;
+    public override string Info => $"{Name}| Level: {Level}, Agility: {Agility} |";
 
 }
