@@ -71,9 +71,11 @@ public abstract class Creature
         Level = level;
     }
     public Creature() { }
-    public abstract void SayHi();
-    
-        //Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
+    //public abstract void SayHi();
+
+    public abstract string Greeting();
+
+    //Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
     public abstract int Power { get; }
 
     public void Upgrade()
@@ -89,24 +91,28 @@ public abstract class Creature
         return $"{GetType().Name.ToUpper()}: {Info}";
     }
 
+    string Go(Direction direction) => $"{direction.ToString().ToLower()}";
 
-
-    public void Go(Direction direction)
+   /* public void Go(Direction direction)
     {
         string dir = direction.ToString().ToLower();
         Console.WriteLine($"{Name} goes {dir}.");
-    }
+    }*/
 
-    public void Go(Direction[] directions)
+    public string[] Go(Direction[] directions)
     {
-        foreach (var d in directions)
-            Go(d);
+        var results = new string[directions.Length];   
+        for (int i = 0; i < directions.Length; i++)
+        {
+            results[i] = Go(directions[i]);
+        }
+        return results;
     }
 
-    public void Go(string input)
+    public string[] Go(string input)
     {
         var dirs = DirectionParser.Parse(input);
-        Go(dirs);
+        return Go(dirs);
     }
 
 

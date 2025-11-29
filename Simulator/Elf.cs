@@ -20,7 +20,7 @@ public class Elf : Creature
 
     public void Sing()
     {
-        Console.WriteLine($"{Name} is singing");
+        //Console.WriteLine($"{Name} is singing");
         singCount++;
         if (singCount % 3 == 0)
             agility = Validator.Limiter(Agility + 1, 0, 10);
@@ -29,11 +29,15 @@ public class Elf : Creature
     public Elf() 
     {
     }
+    public override string Greeting()
+    {
+        return $"Hi, I'm {Name}, my level is {Level}, and my agility is {Agility}.";
+    }
 
-    public override void SayHi()
+    /*public override void SayHi()
     {
         Console.WriteLine($"Hi, I'm {Name}, my level is {Level}, and my agility is {Agility}.");
-    }
+    }*/
 
     /*public override string ToString()
     {
