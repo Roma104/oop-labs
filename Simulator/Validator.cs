@@ -8,7 +8,7 @@ namespace Simulator
 {
     public static class Validator
     {
-        public static int Limiter(int value, int min, int max) 
+        public static int Limiter(int value, int min, int max)
         {
             if (value < min) return min;
             if (value > max) return max;
@@ -17,22 +17,26 @@ namespace Simulator
 
         public static string Shortener(string value, int min, int max, char placeholder)
         {
-            if (string.IsNullOrEmpty(value))
-                value = new string(placeholder, min);
+    
 
-            value = value.Trim();
+            string result = (value ?? string.Empty).Trim();
 
-            if (value.Length < min)
-                value = value + new string(placeholder, min - value.Length);
+            if (result.Length > max)
+            {
+                result = result.Substring(0, max).Trim();
+            }
 
-            if (value.Length > max)
-                value = value.Substring(0, max);
+            if (result.Length < min)
+            {
+                result = result.PadRight(min, placeholder);
+            }
 
-            if (value.Length > 0 && char.IsLower(value[0]))
-                value = char.ToUpper(value[0]) + value.Substring(1);
+            if (result.Length > 0 && char.IsLower(result[0]))
+            {
+                result = char.ToUpperInvariant(result[0]) + (result.Length > 1 ? result.Substring(1) : string.Empty);
+            }
 
-            return value;
+            return result;
         }
-
     }
 }
