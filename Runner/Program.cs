@@ -9,7 +9,7 @@ internal class Program
     {
 
 
-        TestingSmallSquareMap();
+        //TestingSmallSquareMap();
 
         /*Console.Write("Starting simulation!\n");
         Console.WriteLine("=====================\n");
@@ -38,7 +38,7 @@ internal class Program
 
 
 
-    static void TestingSmallSquareMap()
+    /*static void TestingSmallSquareMap()
     {
         Console.WriteLine("\n--- Testing SmallSquareMap ---");
 
@@ -79,7 +79,7 @@ internal class Program
 
 
 
-    static void TestingRectangle()
+    /*static void TestingRectangle()
     {
         Rectangle rect = new Rectangle(2, 3, 5, 7);
         Console.WriteLine(rect); // (2, 3):(5, 7)
@@ -93,7 +93,7 @@ internal class Program
         Console.WriteLine($"Contains {Trick}: {rect.Contains(Trick)}");             // False
     }
 
-    static void TestElfsAndOrcs()
+    /*static void TestElfsAndOrcs()
     {
         Console.WriteLine("HUNT TEST\n");
         var o = new Orc() { Name = "Gorbag", Rage = 7 };
@@ -126,7 +126,7 @@ internal class Program
         }
     }
 
-    static void TestObjectsToString()
+    /*static void TestObjectsToString()
     {
         object[] myObjects = {
         new Animals() { Description = "dogs"},
@@ -136,7 +136,7 @@ internal class Program
     };
         Console.WriteLine("\nMy objects:");
         foreach (var o in myObjects) Console.WriteLine(o);
-    }
+    }*/
 
     /*static void TestValidators()
     {
