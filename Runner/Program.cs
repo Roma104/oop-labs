@@ -1,4 +1,5 @@
 ﻿using Simulator;
+using Simulator.Maps;
 
 namespace Runner;
 
@@ -6,15 +7,26 @@ internal class Program
 {
     static void Main(string[] args)
     {
-        Console.Write("Starting simulation!\n");
+
+
+        TestingSmallSquareMap();
+
+        /*Console.Write("Starting simulation!\n");
         Console.WriteLine("=====================\n");
         Console.WriteLine("\n---Testin_Elfs_and_Orcs---\n");
         TestElfsAndOrcs();
         Console.WriteLine("\n---Testing_String---\n");
-        TestObjectsToString();
-        
-        
-        
+        TestObjectsToString();*/
+
+        /*Console.WriteLine("\n---Testing_Directions_and_Points---\n");
+        Console.WriteLine("====================================");
+        Point p = new(10, 25);
+        Console.WriteLine(p.Next(Direction.Right));          // (11, 25)
+        Console.WriteLine(p.NextDiagonal(Direction.Right));  // (11, 24)
+
+        Console.WriteLine("\n---Testing_Rectangle---\n");
+        TestingRectangle();*/
+
         //Console.WriteLine("\n---Testing_Validators---\n");
         //TestValidators();
         /*
@@ -22,6 +34,63 @@ internal class Program
         TestCreatures();
         Console.WriteLine("\n--- Testing Directions ---");
         TestDirections(); */
+    }
+
+
+
+    static void TestingSmallSquareMap()
+    {
+        Console.WriteLine("\n--- Testing SmallSquareMap ---");
+
+        // Tworzymy mapę 10x10
+        SmallSquareMap map = new SmallSquareMap(10);
+        Console.WriteLine($"Map size: {map.Size}x{map.Size}");
+
+        Point p = new Point(5, 5);
+        Console.WriteLine($"Current point: {p}");
+
+        // Próba ruchu wprost w każdym kierunku
+        foreach (Direction d in Enum.GetValues(typeof(Direction)))
+        {
+            Point next = map.Next(p, d);
+            Console.WriteLine($"Next {d}: {next}");
+        }
+
+        // Próba ruchu po skosie w każdym kierunku
+        foreach (Direction d in Enum.GetValues(typeof(Direction)))
+        {
+            Point nextDiag = map.NextDiagonal(p, d);
+            Console.WriteLine($"NextDiagonal {d}: {nextDiag}");
+        }
+
+        // Test punktów na krawędzi mapy
+        Point edge = new Point(9, 9);
+        Console.WriteLine($"\nEdge point: {edge}");
+        Console.WriteLine($"Next Right: {map.Next(edge, Direction.Right)}"); // powinno pozostać (9,9)
+        Console.WriteLine($"NextDiagonal Up: {map.NextDiagonal(edge, Direction.Up)}"); // powinno pozostać (9,9)
+
+        // Test metody Exist()
+        Point inside = new Point(0, 0);
+        Point outside = new Point(10, 10);
+        Console.WriteLine($"\nExist {inside}: {map.Exist(inside)}");   // True
+        Console.WriteLine($"Exist {outside}: {map.Exist(outside)}");   // False
+    }
+
+
+
+
+    static void TestingRectangle()
+    {
+        Rectangle rect = new Rectangle(2, 3, 5, 7);
+        Console.WriteLine(rect); // (2, 3):(5, 7)
+        Point insidePoint = new Point(3, 4);
+        Point outsidePoint = new Point(6, 8);
+        Point OnLine = new Point(3, 3);
+        Point Trick = new Point(2, 9);
+        Console.WriteLine($"Contains {insidePoint}: {rect.Contains(insidePoint)}");   // True
+        Console.WriteLine($"Contains {outsidePoint}: {rect.Contains(outsidePoint)}"); // False
+        Console.WriteLine($"Contains {OnLine}: {rect.Contains(OnLine)}");             // True
+        Console.WriteLine($"Contains {Trick}: {rect.Contains(Trick)}");             // False
     }
 
     static void TestElfsAndOrcs()
