@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Simulator.Maps;
 
 namespace Simulator;
 public abstract class Creature
@@ -12,8 +14,12 @@ public abstract class Creature
     private string name = "Unknown";
     private int level = 1;
 
-  //  private bool nameSet = false;
-  //  private bool levelSet = false;
+    private Map? _map = null;
+    private Point _point = default;
+
+
+    //  private bool nameSet = false;
+    //  private bool levelSet = false;
 
     public string Name
     {
@@ -61,10 +67,32 @@ public abstract class Creature
 
             level = temp;
         }*/
+    }
 
+    public void InitMapAndPositon(Map map, Point startingPosition)
+    {
+        if (map == null) return;
 
+        //TODO: check if this is required
+        if (!map.Exist(startingPosition)) 
+            throw new ArgumentOutOfRangeException(nameof(startingPosition), "Starting position is outside the map.");
+
+        try 
+        { 
+            map.Add(this, startingPosition);
+        }
+        catch
+        {
+            throw;
+        }
+        _map = map;
+        _point = startingPosition;
 
     }
+
+
+
+
     public Creature(string name, int level = 1)
     {
         Name = name;
@@ -91,7 +119,24 @@ public abstract class Creature
         return $"{GetType().Name.ToUpper()}: {Info}";
     }
 
-    string Go(Direction direction) => $"{direction.ToString().ToLower()}";
+    public void  Go(Direction direction)
+    {
+        if (_map == null) return;
+
+        Point nextPoint = _map!.Next(_point, direction);
+        try
+        {
+            _map?.Move(this, nextPoint);
+        }
+        catch
+        {
+            throw;
+        }
+
+        _point = nextPoint;
+    }
+
+
 
    /* public void Go(Direction direction)
     {
@@ -99,7 +144,7 @@ public abstract class Creature
         Console.WriteLine($"{Name} goes {dir}.");
     }*/
 
-    public string[] Go(List<Direction> directions)
+    /*public string[] Go(List<Direction> directions)
     {
         var results = new string[directions.Count];   
         for (int i = 0; i < directions.Count; i++)
@@ -113,7 +158,7 @@ public abstract class Creature
     {
         List<Direction> dirs = DirectionParser.Parse(input);
         return Go(dirs);
-    }
+    }*/
 
 
 }
