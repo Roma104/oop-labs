@@ -18,14 +18,14 @@ internal class Program
         Console.WriteLine("\n---Testing_String---\n");
         TestObjectsToString();*/
 
-        /*Console.WriteLine("\n---Testing_Directions_and_Points---\n");
-        Console.WriteLine("====================================");
-        Point p = new(10, 25);
-        Console.WriteLine(p.Next(Direction.Right));          // (11, 25)
-        Console.WriteLine(p.NextDiagonal(Direction.Right));  // (11, 24)
+        //Console.WriteLine("\n---Testing_Directions_and_Points---\n");
+        //Console.WriteLine("====================================");
+        //Point p = new(10, 25);
+        //Console.WriteLine(p.Next(Direction.Right));          // (11, 25)
+        //Console.WriteLine(p.NextDiagonal(Direction.Right));  // (11, 24)
 
-        Console.WriteLine("\n---Testing_Rectangle---\n");
-        TestingRectangle();*/
+        //Console.WriteLine("\n---Testing_Rectangle---\n");
+        //TestingRectangle();
 
         //Console.WriteLine("\n---Testing_Validators---\n");
         //TestValidators();

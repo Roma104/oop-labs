@@ -1,21 +1,18 @@
 ﻿using System;
+using System.Drawing;
 
 namespace Simulator.Maps
 {
     public class SmallTorusMap : Map
     {
-        public int Size { get; }
-
-        public SmallTorusMap(int size)
+        public SmallTorusMap(int sizex, int sizey) : base(sizex, sizey)
         {
-            if (size < 5 || size > 20)
-                throw new ArgumentOutOfRangeException(nameof(size), "Size must be between 5 and 20");
-            Size = size;
-        }
+            if(sizex > 20)
+                throw new ArgumentOutOfRangeException(nameof(sizex), "Size must be below 20");
+            if (sizey > 20)
+                throw new ArgumentOutOfRangeException(nameof(sizey), "Size must be below 20");
 
-        public override bool Exist(Point p)
-        {
-            return p.X >= 0 && p.X < Size && p.Y >= 0 && p.Y < Size;
+
         }
 
         public override Point Next(Point p, Direction d)
@@ -26,16 +23,16 @@ namespace Simulator.Maps
             switch (d)
             {
                 case Direction.Up:
-                    y = (y + 1) % Size;       // Y rośnie do góry w teście
+                    y = (y + 1) % Sizey;       // Y rośnie do góry w teście
                     break;
                 case Direction.Down:
-                    y = (y - 1 + Size) % Size; // Y maleje w dół
+                    y = (y - 1 + Sizey) % Sizey; // Y maleje w dół
                     break;
                 case Direction.Left:
-                    x = (x - 1 + Size) % Size;
+                    x = (x - 1 + Sizex) % Sizex;
                     break;
                 case Direction.Right:
-                    x = (x + 1) % Size;
+                    x = (x + 1) % Sizex;
                     break;
             }
 
@@ -50,20 +47,20 @@ namespace Simulator.Maps
             switch (d)
             {
                 case Direction.Up:
-                    x = (x + 1) % Size;
-                    y = (y + 1) % Size;
+                    x = (x + 1) % Sizex;
+                    y = (y + 1) % Sizey;
                     break;
                 case Direction.Right:
-                    x = (x + 1) % Size;
-                    y = (y - 1 + Size) % Size;
+                    x = (x + 1) % Sizex;
+                    y = (y - 1 + Sizey) % Sizey;
                     break;
                 case Direction.Down:
-                    x = (x - 1 + Size) % Size;
-                    y = (y - 1 + Size) % Size;
+                    x = (x - 1 + Sizex) % Sizex;
+                    y = (y - 1 + Sizey) % Sizey;
                     break;
                 case Direction.Left:
-                    x = (x - 1 + Size) % Size;
-                    y = (y + 1) % Size;
+                    x = (x - 1 + Sizex) % Sizex;
+                    y = (y + 1) % Sizey;
                     break;
             }
 

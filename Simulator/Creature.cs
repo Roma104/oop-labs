@@ -99,10 +99,10 @@ public abstract class Creature
         Console.WriteLine($"{Name} goes {dir}.");
     }*/
 
-    public string[] Go(Direction[] directions)
+    public string[] Go(List<Direction> directions)
     {
-        var results = new string[directions.Length];   
-        for (int i = 0; i < directions.Length; i++)
+        var results = new string[directions.Count];   
+        for (int i = 0; i < directions.Count; i++)
         {
             results[i] = Go(directions[i]);
         }
@@ -111,7 +111,7 @@ public abstract class Creature
 
     public string[] Go(string input)
     {
-        var dirs = DirectionParser.Parse(input);
+        List<Direction> dirs = DirectionParser.Parse(input);
         return Go(dirs);
     }
 

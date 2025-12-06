@@ -12,24 +12,15 @@ namespace Simulator.Maps
         /// </summary>
         public int Size { get; }
 
-        private readonly Rectangle _bounds;
-
-        public SmallSquareMap(int size)
+        public SmallSquareMap(int size):base(size, size)
         {
-            if (size < 5 || size > 20)
-                throw new ArgumentOutOfRangeException(nameof(size), "Size must be between 5 and 20");
+            if (size > 20)
+                throw new ArgumentOutOfRangeException(nameof(size), "Size must be below 20");
 
             Size = size;
-            _bounds = new Rectangle(0, 0, Size - 1, Size - 1);
         }
 
-        /// <summary>
-        /// Check if a point belongs to the map.
-        /// </summary>
-        public override bool Exist(Point p)
-        {
-            return _bounds.Contains(p);
-        }
+    
 
         /// <summary>
         /// Returns the next point in the given direction.

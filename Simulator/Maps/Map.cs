@@ -5,12 +5,33 @@
 /// </summary>
 public abstract class Map
 {
+
+    public readonly int Sizex;
+    public readonly int Sizey;
+    private readonly Rectangle area;
+    protected Map(int sizex, int sizey)
+    {
+        if (sizex < 5)
+            throw new ArgumentOutOfRangeException(nameof(sizex), "Size must be greater than 5");
+        if (sizey < 5)
+            throw new ArgumentOutOfRangeException(nameof(sizey), "Size must be greater than 5");
+        Sizex = sizex;
+        Sizey = sizey;
+        area = new Rectangle(0, 0, Sizex - 1, Sizey - 1);
+
+
+    }
+
+
     /// <summary>
     /// Check if give point belongs to the map.
     /// </summary>
     /// <param name="p">Point to check.</param>
     /// <returns></returns>
-    public abstract bool Exist(Point p);
+    public virtual bool Exist(Point p)
+    {
+        return area.Contains(p);
+    }
 
     /// <summary>
     /// Next position to the point in a given direction.
