@@ -59,18 +59,72 @@ public abstract class Map
     /// </summary>
     /// <param name="creature"> Creature to place on the map </param>
     /// <param name="p">Point where creature apeares</param>
-    public abstract void Add(Creature creature, Point p);
+    public void Add(Creature creature, Point p)
+    {
+        if (!Exist(p))
+        {
+            // check if the point is on the map
+            throw new ArgumentOutOfRangeException(nameof(p), "Point is outside the map area.");
+        }
+
+        // if not add to dictionary create new list
+        if (!_points.ContainsKey(p))
+        {
+            _points[p] = new List<Creature>();
+        }
+
+        //addding creature to the list at point p
+        if (_points[p].Contains(creature))
+        {
+            throw new InvalidOperationException($"Creature {creature.Name} is already at point {p}.");
+        }
+
+        _points[p].Add(creature);
+    }
 
 
     /// <summary>
     /// Removing creature from the map.
     /// </summary>
     /// <param name="creature">Vreature we are removing from the map (maybe it died :(((( )</param>
-    public  abstract void Remove(Creature creature);
+    public void Remove(Creature creature)
+    {
+        // finding creature on the map
+
+        Point pointToRemove = default;
+        bool found = false;
+
+        // searchig trough all the points on the map
+        foreach (var entry in _points)
+        {
+            if (entry.Value.Contains(creature))
+            {
+                pointToRemove = entry.Key;
+                found = true;
+                break;
+            }
+        }
+
+        if (found)
+        {
+            // remove creature from the list at found point
+            _points[pointToRemove].Remove(creature);
+
+            // eventually if the point is empty remove it from the dictionary
+            if (_points[pointToRemove].Count == 0)
+            {
+                _points.Remove(pointToRemove);
+            }
+        }
+        else
+        {
+            throw new InvalidOperationException($"Creature {creature.Name} is not found on the map.");
+        }
+    }
 
 
 
-    public void Move(Creature creature, Point p)
+public void Move(Creature creature, Point p)
     {
         Remove(creature);
         Add(creature, p);
@@ -81,8 +135,20 @@ public abstract class Map
     /// Get list of creatures
     /// </summary>
     /// <param name="p"> point to check</param>
-    /// <returns></returns>
-    public abstract List<Creature>? At(Point p);
+    /// <returns>gives point or null</returns>
+    public List<Creature>? At(Point p)
+    {
+        if (!Exist(p))
+        {
+            return null;
+            //if doesn't exist return null
+        }
+        if (_points.TryGetValue(p, out List<Creature>? creaturesAtPoint))
+        {
+            return creaturesAtPoint; // return list of creatures at point p if exists
+        }
+        return null; //otherwise return null
+    }
 
 
 
