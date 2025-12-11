@@ -6,6 +6,9 @@ public class Orc : Creature
     private int rage;
     private int huntCount = 0;
 
+    // Implementacja symbolu
+    public override char Symbol => 'O';
+
     public int Rage
     {
         get => rage;

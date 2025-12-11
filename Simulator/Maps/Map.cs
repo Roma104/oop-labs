@@ -22,7 +22,7 @@ public abstract class Map
         Sizey = sizey;
         area = new Rectangle(0, 0, Sizex - 1, Sizey - 1);
 
-
+        _points = new Dictionary<Point, List<Creature>>();
     }
 
 

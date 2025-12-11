@@ -17,6 +17,10 @@ public abstract class Creature
     private Map? _map = null;
     private Point _point = default;
 
+    /// <summary>
+    /// Symbol representing the creature on the map.
+    /// </summary>
+    public abstract char Symbol { get; }
 
     //  private bool nameSet = false;
     //  private bool levelSet = false;
