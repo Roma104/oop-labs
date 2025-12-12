@@ -7,7 +7,7 @@ public class Orc : Creature
     private int huntCount = 0;
 
     // Implementacja symbolu
-    public override char Symbol => 'O';
+    public override char MapSymbol => 'O';
 
     public int Rage
     {

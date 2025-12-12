@@ -19,18 +19,23 @@ public class MapVisualizer
         _height = map.Sizey;
     }
 
+    private Map Get_map()
+    {
+        return _map;
+    }
+
     /// <summary>
     /// Symbol for point on the map.
     /// </summary>
     /// <param name="p">point on the map.</param>
     /// <returns>Symbol: 'O', 'E', 'X' or ' '</returns>
-    private char GetCellSymbol(Point p)
+    private char GetCellSymbol(Point p, Map _map)
     {
         // testing if the point is on the map
         if (!_map.Exist(p))
             return ' ';
 
-        List<Creature>? creatures = _map.At(p);
+        List<IMapable>? creatures = _map.At(p);
 
         if (creatures == null || creatures.Count == 0)
         {
@@ -39,7 +44,7 @@ public class MapVisualizer
         else if (creatures.Count == 1)
         {
             // one creature; use acording symbol ('O', 'E')
-            return creatures[0].Symbol;
+            return creatures[0].MapSymbol;
         }
         else
         {
@@ -121,7 +126,7 @@ public class MapVisualizer
             Point p = new Point(x, y);
 
             // dowlanding symbols (X, O, E lub ' ')
-            char symbol = GetCellSymbol(p);
+            char symbol = GetCellSymbol(p, Get_map());
 
             // writinf symbol with spaces
             line.Append(' ');

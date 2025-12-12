@@ -9,7 +9,7 @@ public class Elf : Creature
     private int singCount = 0;
 
     // Implementacja symbolu
-    public override char Symbol => 'E';
+    public override char MapSymbol => 'E';
 
     public int Agility
     {

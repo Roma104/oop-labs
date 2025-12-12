@@ -44,7 +44,7 @@ public class Program
 
             // informations on the turn
             Console.WriteLine($"\n--- Turn {turnCount} ---");
-            Console.WriteLine($"Creature: {simulation.CurrentCreature.Name} ({simulation.CurrentCreature.Symbol})");
+            Console.WriteLine($"Creature: {simulation.CurrentCreature.Name} ({simulation.CurrentCreature.MapSymbol})");
             Console.WriteLine($"Action: Move {simulation.CurrentMoveName.ToUpper()}");
             Console.WriteLine("Press ENTER to continue, or Q/ESC to quit...");
 

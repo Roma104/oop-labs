@@ -1,4 +1,5 @@
 ﻿using Simulator;
+using Simulator.Maps;
 
 /// <summary>
 /// Map of points.
@@ -6,7 +7,7 @@
 public abstract class Map
 {
 
-    private Dictionary<Point, List<Creature>> _points;
+    private Dictionary<Point, List<IMapable>> _points;
 
 
     public readonly int Sizex;
@@ -22,7 +23,7 @@ public abstract class Map
         Sizey = sizey;
         area = new Rectangle(0, 0, Sizex - 1, Sizey - 1);
 
-        _points = new Dictionary<Point, List<Creature>>();
+        _points = new Dictionary<Point, List<IMapable>>();
     }
 
 
@@ -59,7 +60,7 @@ public abstract class Map
     /// </summary>
     /// <param name="creature"> Creature to place on the map </param>
     /// <param name="p">Point where creature apeares</param>
-    public void Add(Creature creature, Point p)
+    public void Add(IMapable mappable, Point p)
     {
         if (!Exist(p))
         {
@@ -70,16 +71,16 @@ public abstract class Map
         // if not add to dictionary create new list
         if (!_points.ContainsKey(p))
         {
-            _points[p] = new List<Creature>();
+            _points[p] = new List<IMapable>();
         }
 
         //addding creature to the list at point p
-        if (_points[p].Contains(creature))
+        if (_points[p].Contains(mappable))
         {
-            throw new InvalidOperationException($"Creature {creature.Name} is already at point {p}.");
+            throw new InvalidOperationException($"Creature {mappable.Name} is already at point {p}.");
         }
 
-        _points[p].Add(creature);
+        _points[p].Add(mappable);
     }
 
 
@@ -87,7 +88,7 @@ public abstract class Map
     /// Removing creature from the map.
     /// </summary>
     /// <param name="creature">Vreature we are removing from the map (maybe it died :(((( )</param>
-    public void Remove(Creature creature)
+    public void Remove(IMapable mappable)
     {
         // finding creature on the map
 
@@ -97,7 +98,7 @@ public abstract class Map
         // searchig trough all the points on the map
         foreach (var entry in _points)
         {
-            if (entry.Value.Contains(creature))
+            if (entry.Value.Contains(mappable))
             {
                 pointToRemove = entry.Key;
                 found = true;
@@ -108,7 +109,7 @@ public abstract class Map
         if (found)
         {
             // remove creature from the list at found point
-            _points[pointToRemove].Remove(creature);
+            _points[pointToRemove].Remove(mappable);
 
             // eventually if the point is empty remove it from the dictionary
             if (_points[pointToRemove].Count == 0)
@@ -118,16 +119,16 @@ public abstract class Map
         }
         else
         {
-            throw new InvalidOperationException($"Creature {creature.Name} is not found on the map.");
+            throw new InvalidOperationException($"Creature {mappable.Name} is not found on the map.");
         }
     }
 
 
 
-public void Move(Creature creature, Point p)
+public void Move(IMapable mappable, Point p)
     {
-        Remove(creature);
-        Add(creature, p);
+        Remove(mappable);
+        Add(mappable, p);
     }
     
 
@@ -136,14 +137,14 @@ public void Move(Creature creature, Point p)
     /// </summary>
     /// <param name="p"> point to check</param>
     /// <returns>gives point or null</returns>
-    public List<Creature>? At(Point p)
+    public List<IMapable>? At(Point p)
     {
         if (!Exist(p))
         {
             return null;
             //if doesn't exist return null
         }
-        if (_points.TryGetValue(p, out List<Creature>? creaturesAtPoint))
+        if (_points.TryGetValue(p, out List<IMapable>? creaturesAtPoint))
         {
             return creaturesAtPoint; // return list of creatures at point p if exists
         }
@@ -158,7 +159,7 @@ public void Move(Creature creature, Point p)
     /// <param name="x">point to check x coordinates</param>
     /// <param name="y">point to check y coordinates</param>
     /// <returns></returns>
-    public List<Creature>? At(int x, int y)
+    public List<IMapable>? At(int x, int y)
     {
         return At( new Point(x,y));
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Simulator.Maps;
 
 namespace Simulator;
-public abstract class Creature
+public abstract class Creature : IMapable
 {
     //pola są prywatne
     private string name = "Unknown";
@@ -20,7 +20,7 @@ public abstract class Creature
     /// <summary>
     /// Symbol representing the creature on the map.
     /// </summary>
-    public abstract char Symbol { get; }
+    public abstract char MapSymbol { get; }
 
     //  private bool nameSet = false;
     //  private bool levelSet = false;
@@ -117,6 +117,10 @@ public abstract class Creature
     }
 
     public abstract string Info { get; }
+    object IMapable.Name { get => Name; set => throw new NotImplementedException(); }
+
+    Map? IMapable._map => throw new NotImplementedException();
+
 
     public override string ToString()
     {
@@ -140,13 +144,23 @@ public abstract class Creature
         _point = nextPoint;
     }
 
-
-
-   /* public void Go(Direction direction)
+    void IMapable.Go(Direction direction)
     {
-        string dir = direction.ToString().ToLower();
-        Console.WriteLine($"{Name} goes {dir}.");
-    }*/
+        throw new NotImplementedException();
+    }
+
+    void IMapable.InitMapAndPositon(Map map, Point startingPosition)
+    {
+        throw new NotImplementedException();
+    }
+
+
+
+    /* public void Go(Direction direction)
+     {
+         string dir = direction.ToString().ToLower();
+         Console.WriteLine($"{Name} goes {dir}.");
+     }*/
 
     /*public string[] Go(List<Direction> directions)
     {
