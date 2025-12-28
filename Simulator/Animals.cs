@@ -1,21 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Simulator.Maps;
+using System;
+
 
 namespace Simulator;
-// plural name because represents group of animals v
-public class Animals
+// plural name because represents group of animals :v
+public class Animals :IMapable
 {
+
+    protected Map? _map;
+    protected Point _point;
+
     private string description = "Unknown";
     //private bool descriptionSet = false;
-    
-    public virtual string Info => $"{Description} <{Size}>";
-    public required string Description
-    {
-        get => description;
-        init => description = Validator.Shortener(value, 3, 15, '#');
+    public required string Description { get; init; }
+    //public required string Description
+    //{
+      //  get => description;
+        //init => description = Validator.Shortener(value, 3, 15, '#');
         /*init
         {
             if (descriptionSet) return;
@@ -43,13 +44,31 @@ public class Animals
 
             description = temp;
         }*/
-    }
-
+    //}
+    //WYPEŁNIĆ TE NOTIMPLEMENTED LOOOOOL : DONE
     public uint Size { get; set; } = 3;
+    public string Name => Description;
+    public Map? CurrentMap => _map;
+    public virtual char MapSymbol => 'A';//Domyślny symbol dla zwierząt
 
-    public override string ToString()
+    public virtual void Go(Direction direction)
     {
-        return $"{GetType().Name.ToUpper()}: {Info}";
+        //dla zwierząt a potem dla ptaków override, one mają robić dwa razy po kroku a nie dwa kroki raz
+        if (_map == null) return;
+        Point nextPoint = _map.Next(_point, direction);
+        _map.Move(this, nextPoint);
+        _point = nextPoint;
+
     }
+
+    public void InitMapAndPositon(Map map, Point startingPosition)
+    {
+        _map = map;
+        _point = startingPosition;
+        _map.Add(this, startingPosition);
+    }
+
+    
+    public override string ToString() => $"{GetType().Name.ToUpper()}: {Name} <{Size}>";
 
 }

@@ -1,4 +1,5 @@
 ﻿using Simulator;
+using Simulator.Maps;
 
 namespace Simulator;
 
@@ -22,7 +23,7 @@ public class Simulation
     /// <summary>
     /// Creatures moving on the map.
     /// </summary>
-    public List<Creature> Creatures { get; }
+    public List<IMapable> IMapables { get; }
 
     /// <summary>
     /// Starting positions of creatures.
@@ -46,13 +47,8 @@ public class Simulation
     /// <summary>
     /// Creature which will be moving current turn.
     /// </summary>
-    public Creature CurrentCreature 
-    { 
-        get 
-        {
-            return Creatures[_creatureIndex];
-        }
-    }
+    public IMapable CurrentImapable => IMapables[_creatureIndex];
+        
 
     /// <summary>
     /// Lowercase name of direction which will be used in current turn.
@@ -76,20 +72,21 @@ public class Simulation
     /// if number of creatures differs from
     /// number of starting positions.
     /// </summary>
-    public Simulation(Map map, List<Creature> creatures,
+    public Simulation(Map map, List<IMapable> imapables,
         List<Point> positions, string moves)
-    { 
-        if (creatures == null || creatures.Count == 0) 
+    {
+        IMapables = imapables;
+
+        if (imapables == null || imapables.Count == 0) 
         { 
-            throw new ArgumentException("Creatures list cannot be empty", nameof(creatures));
+            throw new ArgumentException("Creatures list cannot be empty", nameof(imapables));
         }
-        if (creatures.Count != positions.Count) 
+        if (imapables.Count != positions.Count) 
         { 
             throw new ArgumentException("Number of creatures must match number of positions", nameof(positions));
         }
 
         Map = map ?? throw new ArgumentNullException(nameof(map));
-        Creatures = creatures;
         Positions = positions;
         Moves = moves;
 
@@ -97,9 +94,9 @@ public class Simulation
 
         _totalMovesCount = _parsedMoves.Count;
 
-        for(int i = 0; i < Creatures.Count; i++)
+        for(int i = 0; i < IMapables.Count; i++)
         {
-            Creatures[i].InitMapAndPositon(Map, Positions[i]);
+            IMapables[i].InitMapAndPositon(Map, Positions[i]);
         }
 
     }
@@ -114,19 +111,22 @@ public class Simulation
         { 
             throw new InvalidOperationException("Simulation is already finished");
         }
-        
+        Direction currentDirection = _parsedMoves[_moveIndex];
+        IMapable itemToMove = CurrentImapable;
+
+        itemToMove.Go(currentDirection);
+        _moveIndex++;
+        _creatureIndex = (_creatureIndex + 1) % IMapables.Count;
+
         if (_totalMovesCount == 0)
         {
             Finished = true;
             return;
         }
 
-        Direction currentDirection = _parsedMoves[_moveIndex];
-        Creature creatureToMove = CurrentCreature;
-
         try
         {
-            creatureToMove.Go(currentDirection);
+            itemToMove.Go(currentDirection);
 
         }
         catch(ArgumentOutOfRangeException)
@@ -135,12 +135,12 @@ public class Simulation
         }
         catch(Exception e)
         {
-            Console.WriteLine($"Error during creature move for: {creatureToMove.Name}: {e.Message}");
+            Console.WriteLine($"Error during creature move for: {itemToMove.Name}: {e.Message}");
         }
 
         _moveIndex++;
 
-        _creatureIndex = (_creatureIndex + 1) % Creatures.Count;
+        _creatureIndex = (_creatureIndex + 1) % IMapables.Count;
 
         if (_moveIndex >= _totalMovesCount)
         {

@@ -117,9 +117,9 @@ public abstract class Creature : IMapable
     }
 
     public abstract string Info { get; }
-    object IMapable.Name { get => Name; set => throw new NotImplementedException(); }
+    string IMapable.Name { get => Name; }
 
-    Map? IMapable._map => throw new NotImplementedException();
+    //Map? IMapable._map => throw new NotImplementedException();
 
 
     public override string ToString()
@@ -144,7 +144,7 @@ public abstract class Creature : IMapable
         _point = nextPoint;
     }
 
-    void IMapable.Go(Direction direction)
+    /*void IMapable.Go(Direction direction)
     {
         throw new NotImplementedException();
     }
@@ -152,7 +152,7 @@ public abstract class Creature : IMapable
     void IMapable.InitMapAndPositon(Map map, Point startingPosition)
     {
         throw new NotImplementedException();
-    }
+    }*/
 
 
 

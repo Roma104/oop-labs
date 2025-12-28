@@ -2,9 +2,9 @@
 
 public interface IMapable
 {
-    object Name { get; set; }
-    Map? _map {get;}
+    string Name { get; }
     char MapSymbol { get; }
     void Go(Direction direction);
     void InitMapAndPositon(Map map, Point startingPosition);
+    string ToString();
 }
