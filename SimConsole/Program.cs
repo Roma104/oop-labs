@@ -84,9 +84,9 @@ public class Program
         {
             new Elf("Elandor"),
             new Orc("Gorbag"),
-            new Animals { Description = "Monkeys", Size = 6 },
+            new Animals { Description = "Rabbits", Size = 6 },
             new Birds { Description = "Eagles", Size = 4, CanFly = true },
-            new Birds { Description = "Penguins", Size = 3, CanFly = false }
+            new Birds { Description = "Ostrich", Size = 3, CanFly = false }
         };
         List<Point> points = new()
         {
