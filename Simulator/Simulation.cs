@@ -105,48 +105,35 @@ public class Simulation
     /// Makes one move of current creature in current direction.
     /// Throw error if simulation is finished.
     /// </summary>
-    public void Turn() 
+    public void Turn()
     {
-        if (Finished) 
-        { 
+        if (Finished)
+        {
             throw new InvalidOperationException("Simulation is already finished");
         }
+
+        // Pobieramy dane dla bieżącego ruchu
         Direction currentDirection = _parsedMoves[_moveIndex];
         IMapable itemToMove = CurrentImapable;
 
-        itemToMove.Go(currentDirection);
-        _moveIndex++;
-        _creatureIndex = (_creatureIndex + 1) % IMapables.Count;
-
-        if (_totalMovesCount == 0)
-        {
-            Finished = true;
-            return;
-        }
-
+        // Wykonujemy ruch (opakowany w try-catch dla bezpieczeństwa)
         try
         {
             itemToMove.Go(currentDirection);
-
         }
-        catch(ArgumentOutOfRangeException)
+        catch (Exception e)
         {
-            // invalid move - do nothing
-        }
-        catch(Exception e)
-        {
-            Console.WriteLine($"Error during creature move for: {itemToMove.Name}: {e.Message}");
+            Console.WriteLine($"Error during move for {itemToMove.Name}: {e.Message}");
         }
 
+        // Zwiększamy indeksy o JEDEN
         _moveIndex++;
-
         _creatureIndex = (_creatureIndex + 1) % IMapables.Count;
 
+        // Sprawdzamy, czy to był ostatni ruch
         if (_moveIndex >= _totalMovesCount)
         {
             Finished = true;
         }
-
-
     }
 }
