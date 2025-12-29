@@ -1,0 +1,71 @@
+﻿@page
+@model SimulationModel
+@{
+    ViewData["Title"] = "Symulacja";
+    var turn = Model.Log.TurnLogs[Model.CurrentTurn];
+}
+
+<div class="text-center" style="padding-top: 20px;">
+
+    <div class="turn-nav">
+        <form method="post" asp-page-handler="Prev">
+            <button class="btn-nav">←</button>
+        </form>
+        <span style="font-weight: bold; color: #1a1a40; font-size: 1.2rem;">Tura @Model.CurrentTurn</span>
+        <form method="post" asp-page-handler="Next">
+            <button class="btn-nav">→</button>
+        </form>
+    </div>
+
+    <div class="map-container shadow-sm">
+        <table class="map-table">
+            @for (int y = Model.Log.Sizey - 1; y >= 0; y--)
+            {
+                <tr>
+                    <td class="axis-label text-end pe-2">@y</td>
+                    @for (int x = 0; x < Model.Log.Sizex; x++)
+                    {
+                        var p = new Simulator.Point(x, y);
+                        <td class="map-cell">
+                            @if (turn.Symbols.ContainsKey(p))
+                            {
+                                var sym = turn.Symbols[p];
+                                string imgName = sym switch
+                                {
+                                    'E' => "elf.png",
+                                    'O' => "orc.png",
+                                    'A' => "rabbit.png",
+                                    'B' => "eagle.png",
+                                    'b' => "ostrich.png",
+                                    _ => "x.png"
+                                };
+                                <img src="~/images/@imgName" style="width: 50px; height: 50px;" />
+                            }
+                        </td>
+                    }
+                </tr>
+            }
+            <tr>
+                <td></td>
+                @for (int x = 0; x < Model.Log.Sizex; x++)
+                {
+                    <td class="axis-label">@x</td>
+                }
+            </tr>
+        </table>
+    </div>
+
+    <div class="mt-3">
+        @if (Model.CurrentTurn == 0)
+        {
+            <h5 style="color: #8b0000; font-weight: bold;">Pozycje startowe</h5>
+        }
+        else
+        {
+            <h5 style="color: #8b0000; font-weight: bold;">
+                Ruch: <span style="text-transform: uppercase;">@turn.Move</span>
+                wykonał: <span style="color: #1a1a40;">@turn.Mappable</span>
+            </h5>
+        }
+    </div>
+</div>

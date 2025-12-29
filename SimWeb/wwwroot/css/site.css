@@ -1,0 +1,125 @@
+/* Styl paska nawigacyjnego (ciemny fiolet/granat) */
+header {
+    background-color: #1a1a40;
+    padding: 1rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+    header b {
+        color: #f0e68c; 
+        font-size: 1.5rem;
+        margin-right: 2rem;
+    }
+/* Wyœrodkowanie g³ównej zawartoœci strony */
+main {
+    padding: 2rem;
+    text-align: center;
+    flex: 1;
+}
+
+body {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.text-center {
+    width: 100%;
+    max-width: 1000px; 
+    margin: 0 auto;
+}
+
+    .text-center img {
+        display: block;
+        margin: 20px auto; /* Centrowanie obrazka goblina */
+    }
+
+
+
+.turn-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+nav a {
+    color: #00fa9a; /* Turkusowy kolor linków */
+    text-decoration: none;
+    margin-right: 1.5rem;
+    font-weight: bold;
+}
+
+    nav a:hover {
+        text-decoration: underline;
+    }
+
+/* Stylizacja mapy */
+/* wyœrodkowanie tabeli mapy */
+.map-container {
+    background-color: #90ee90;
+    display: inline-block; /* Wa¿ne: kontener zwê¿a siê do rozmiaru tabeli */
+    padding: 10px;
+    border: 1px solid #444;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.map-table {
+    border-collapse: collapse;
+    table-layout: fixed;
+}
+
+.map-cell {
+    width: 70px;
+    height: 70px;
+    min-width: 70px; /* Zabezpieczenie */
+    min-height: 70px;
+    border: 1px dotted #444;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 0; 
+    padding: 0;
+}
+    .map-cell img {
+        width: 50px;
+        height: 50px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    
+
+/* Osie wspó³rzêdnych */
+.axis-label {
+    font-size: 0.8rem;
+    color: #555;
+    padding: 2px;
+}
+
+/* Przyciski nawigacji tur */
+.turn-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.btn-nav {
+    background-color: #ddd;
+    border: 1px solid #999;
+    padding: 5px 15px;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    margin-top: 50px;
+}

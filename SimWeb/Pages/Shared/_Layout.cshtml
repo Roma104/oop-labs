@@ -1,0 +1,25 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SimWeb</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <b>SimWeb</b>
+        <nav>
+            <a asp-page="/Index">Informacje</a>
+            <a asp-page="/Simulation">Symulacja</a>
+        </nav>
+    </header>
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <footer style="background-color: #7b68ee; color: white; width: 100%; padding: 5px 0; text-align: center; font-size: 0.9rem;">
+        &copy; 2025 Roma Bury
+    </footer>
+</body>
+</html>
