@@ -107,8 +107,13 @@ public abstract class Creature : IMapable
 
     public abstract string Greeting();
 
+
+    public Func<int> CalculatePower { get; set; } = () => 0;
+
     //Console.WriteLine($"Hi, I'm {Name}, my level is {Level}.");
-    public abstract int Power { get; }
+    public int Power => CalculatePower();
+
+
 
     public void Upgrade()
     {

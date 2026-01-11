@@ -15,7 +15,11 @@ public class Orc : Creature
         init => rage = Validator.Limiter(value, 0, 10);
     }
 
-    public Orc(string name, int level = 1, int rage = 1) : base(name, level) => Rage = rage;
+    public Orc(string name, int level = 1, int rage = 1) : base(name, level) 
+    { 
+        Rage = rage;
+        CalculatePower =() => 7 * Level + 3 * Rage;
+    }
 
     public void Hunt()
     {
@@ -29,7 +33,10 @@ public class Orc : Creature
 
     
 
-    public Orc(){}
+    public Orc()
+    {
+        CalculatePower = () => 7 * Level + 3 * Rage;
+    }
 
     public override string Greeting()
     {
@@ -42,7 +49,16 @@ public class Orc : Creature
         Console.WriteLine($"Hi, My name is {Name}, my level is {Level}, and my rage is {Rage}.");
     }*/
 
-    public override int Power => 7 * Level + 3 * Rage;
+
+
+
+    //public override int Power => 7 * Level + 3 * Rage;
+
+
+
+
+
+
     public override string Info => $"{Name}| Level: {Level}, Rage: {Rage} |";
 
 }

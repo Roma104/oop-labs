@@ -17,8 +17,12 @@ public class Elf : Creature
         init => agility = Validator.Limiter(value, 0, 10);
     }
 
-  
-    public Elf(string name, int level = 1, int agility = 1) : base(name, level) => Agility = agility;
+
+    public Elf(string name, int level = 1, int agility = 1) : base(name, level) 
+    { 
+        Agility = agility;
+        CalculatePower = () => 8 * Level + 2 * Agility;
+    }
 
 
     public void Sing()
@@ -29,9 +33,7 @@ public class Elf : Creature
             agility = Validator.Limiter(Agility + 1, 0, 10);
     }
 
-    public Elf() 
-    {
-    }
+    public Elf():this("Elf") { }
     public override string Greeting()
     {
         return $"Hi, I'm {Name}, my level is {Level}, and my agility is {Agility}.";
@@ -47,7 +49,7 @@ public class Elf : Creature
         return $"Hi, I'm {Name}, my level is {Level}, and my agility is {Agility}.";
     }*/
 
-    public override int Power => 8 * Level + 2 * Agility;
+    //public override int Power => 8 * Level + 2 * Agility;
     public override string Info => $"{Name}| Level: {Level}, Agility: {Agility} |";
 
 }
